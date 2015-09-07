@@ -72,6 +72,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     private static final int COL_WEATHER_WIND_SPEED = 7;
     private static final int COL_WEATHER_DEGREES = 8;
     private static final int COL_WEATHER_CONDITION_ID = 9;
+    private static final int COL_LOCATION_SETTING = 10;
 
     public DetailFragment() {
     }
@@ -159,8 +160,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
         // Read weather condition ID from cursor
         int weatherId = data.getInt(COL_WEATHER_CONDITION_ID);
-        // User placeholder Image
-        mIconView.setImageResource(R.drawable.ic_launcher);
+        mIconView.setImageResource(Utility.getArtResourceForWeatherCondition(weatherId));
 
         // Read date from cursor
         long date = data.getLong(COL_WEATHER_DATE);
