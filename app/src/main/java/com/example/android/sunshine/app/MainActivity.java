@@ -51,12 +51,13 @@ public class MainActivity extends ActionBarActivity implements ForecastFragment.
             ForecastFragment ff = (ForecastFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_forecast);
 
             if (null != ff) {
-                // Notify for location changed
+                // Notify for location changed on forecast fragment
                 ff.onLocationChanged();
             }
             DetailFragment df = (DetailFragment) getSupportFragmentManager().findFragmentByTag(DETAILFRAGMENT_TAG);
 
             if (null != df) {
+                // Notify for location changed on detail fragment
                 df.onLocationChanged(location);
             }
 
@@ -96,7 +97,7 @@ public class MainActivity extends ActionBarActivity implements ForecastFragment.
     @Override
     public void onItemSelected(Uri contentUri) {
         if (mTwoPane) {
-            // IN two-pane mode, show the detail view in this activity by
+            // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
             // fragment transaction.
             Bundle arguments = new Bundle();
