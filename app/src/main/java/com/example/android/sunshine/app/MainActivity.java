@@ -37,6 +37,10 @@ public class MainActivity extends ActionBarActivity implements ForecastFragment.
             }
         } else {
             mTwoPane = false;
+
+            // To get rid of an unnecessary shadow below the action bar for phone.
+            // (same pane look and feel for action bar and today layout background color)
+            getSupportActionBar().setElevation(0f);
         }
 
         // Not to display Today layout for 'two pane' screen (tablet)
