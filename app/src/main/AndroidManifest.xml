@@ -48,6 +48,9 @@
                 android:value="com.example.android.sunshine.app.MainActivity" />
         </activity>
 
+        <service
+            android:name=".service.SunshineService" />
+
         <provider
             android:authorities="com.example.android.sunshine.app"
             android:name=".data.WeatherProvider" />
