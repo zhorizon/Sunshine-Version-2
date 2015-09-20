@@ -3,6 +3,11 @@
     package="com.example.android.sunshine.app" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Permissions required by the sync adapter -->
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
 <!--
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 -->
@@ -48,16 +53,35 @@
                 android:value="com.example.android.sunshine.app.MainActivity" />
         </activity>
 
+        <!-- SyncAdapter's dummy authentication service -->
         <service
-            android:name=".service.SunshineService" />
+            android:name=".sync.SunshineAuthenticatorService">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator" />
+        </service>
 
-        <receiver
-            android:name=".service.SunshineService$AlarmReceiver"
-            android:enabled="true"/>
+        <!-- The SyncAdapter service -->
+        <service
+            android:name=".sync.SunshineSyncService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter" />
+            </intent-filter>
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/syncadapter" />
+        </service>
 
+        <!-- android:exported="false" means that only our app can see our content provider -->
+        <!-- android:syncable="true" mean that this content provider will be synced with a server -->
         <provider
-            android:authorities="com.example.android.sunshine.app"
-            android:name=".data.WeatherProvider" />
+            android:authorities="@string/content_authority"
+            android:name=".data.WeatherProvider"
+            android:exported="false"
+            android:syncable="true" />
     </application>
-
 </manifest>
