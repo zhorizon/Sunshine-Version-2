@@ -2,12 +2,13 @@ package com.example.android.sunshine.app;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.example.android.sunshine.app.sync.SunshineSyncAdapter;
 
 public class MainActivity extends ActionBarActivity implements ForecastFragment.Callback {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
@@ -46,6 +47,8 @@ public class MainActivity extends ActionBarActivity implements ForecastFragment.
         // Not to display Today layout for 'two pane' screen (tablet)
         ForecastFragment forecastFragment = (ForecastFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_forecast);
         forecastFragment.setUseTodayLayout(!mTwoPane);
+
+        SunshineSyncAdapter.initializeSyncAdapter(this);
     }
 
     @Override
