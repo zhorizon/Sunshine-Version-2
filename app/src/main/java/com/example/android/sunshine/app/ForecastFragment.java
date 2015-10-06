@@ -1,9 +1,11 @@
 package com.example.android.sunshine.app;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,11 +23,12 @@ import com.example.android.sunshine.app.sync.SunshineSyncAdapter;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.content.CursorLoader;
+import android.widget.TextView;
 
 /**
  * Created by Cencil on 7/27/2015.
  */
-public class ForecastFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class ForecastFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, SharedPreferences.OnSharedPreferenceChangeListener {
     private static final String LOG_TAG = ForecastFragment.class.getSimpleName();
     private static final String SELECTED_KEY = "selected_position";
     private static final int FORECAST_LOADER = 0;
@@ -100,6 +103,9 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         mListView = (ListView) rootView.findViewById(R.id.listview_forecast);
         mListView.setAdapter(mForecastAdapter);
 
+        TextView emptyTextView = (TextView) rootView.findViewById(R.id.listview_forecast_empty);
+        mListView.setEmptyView(emptyTextView);
+
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -154,6 +160,22 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
     @Override
+    public void onResume() {
+        // register shared preferences on change listener on forecast fragment
+        PreferenceManager.getDefaultSharedPreferences(getActivity()).
+                registerOnSharedPreferenceChangeListener(this);
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        // unregister on change listener
+        PreferenceManager.getDefaultSharedPreferences(getActivity()).
+                unregisterOnSharedPreferenceChangeListener(this);
+        super.onPause();
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
@@ -162,11 +184,6 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        if (item.getItemId() == R.id.action_refresh) {
-//            updateWeather();
-//            return true;
-//        }
-
         if (item.getItemId() == R.id.action_map) {
             openPreferredLocationInMap();
             return true;
@@ -205,6 +222,8 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
             // to, do so now.
             mListView.smoothScrollToPosition(mPosition);
         }
+
+        updateEmptyView();
     }
 
     @Override
@@ -213,6 +232,13 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         // above is about to be closed. We need to make sure we are no
         // longer using it.
         mForecastAdapter.swapCursor(null);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals(getString(R.string.pref_location_status_key))) {
+            updateEmptyView();
+        }
     }
 
     public void onLocationChanged() {
@@ -255,6 +281,39 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
                 } else {
                     Log.d(LOG_TAG, "Couldn't call " + geoLocation.toString() + ", no receiving apps installed!");
                 }
+            }
+        }
+    }
+
+    /*
+        Updates the empty list view iwth contextually relevant informaiton that the user can
+        use to determine why they aren't seeing weather.
+     */
+    private void updateEmptyView() {
+        if (mForecastAdapter.getCount() == 0) {
+            TextView tv = (TextView) getView().findViewById(R.id.listview_forecast_empty);
+
+            if (null != tv) {
+                int message = R.string.empty_forecast_list;
+
+                @SunshineSyncAdapter.LocationStatus int location = Utility.getLocationStatus(getActivity());
+
+                switch (location) {
+                    case SunshineSyncAdapter.LOCATION_STATUS_SERVER_DOWN:
+                        message = R.string.empty_forecast_list_server_down;
+                        break;
+                    case SunshineSyncAdapter.LOCATION_STATUS_SERVER_INVALID:
+                        message = R.string.empty_forecast_list_server_error;
+                        break;
+                    case SunshineSyncAdapter.LOCATION_STATUS_INVALID:
+                        message = R.string.empty_forecast_list_invalid_location;
+                        break;
+                    default:
+                        if (!Utility.isNetworkAvailable(getActivity())) {
+                            message = R.string.empty_forecast_list_no_network;
+                        }
+                }
+                tv.setText(message);
             }
         }
     }

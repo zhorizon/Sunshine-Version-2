@@ -115,7 +115,7 @@ public class WeatherContract {
         public static final String COLUMN_MAX_TEMP = "max";
 
         // Humidity is stored as a float representing percentage
-        public static final String COLUMN_HUMIDITY = "humidity";
+         public static final String COLUMN_HUMIDITY = "humidity";
 
         // Humidity is stored as a float representing percentage
         public static final String COLUMN_PRESSURE = "pressure";
