@@ -130,8 +130,8 @@ public class ForecastAdapter extends CursorAdapter {
         long date = cursor.getLong(ForecastFragment.COL_WEATHER_DATE);
         viewHolder.dateView.setText(Utility.getFriendlyDayString(context, date));
 
-        // Read weather forecast from cursor
-        String forecast = cursor.getString(ForecastFragment.COL_WEATHER_DESC);
+        // Get description from weather condition ID
+        String forecast = Utility.getStringForWeatherCondition(mContext, weatherId);
         viewHolder.descriptionView.setText(forecast);
 
         // For accessibility, add a content description to the icon field
