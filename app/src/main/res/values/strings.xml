@@ -24,6 +24,13 @@
     <string name="pref_units_metric_label">Metric</string>
     <string name="pref_units_imperial_label">Imperial</string>
 
+    <string name="pref_art_pack_key" translatable="false">pref_art_pack</string>
+    <string name="pref_art_pack_label">Icon Pack</string>
+    <string name="pref_art_pack_sunshine" translatable="false">https://raw.githubusercontent.com/udacity/Sunshine-Version-2/sunshine_master/app/src/main/res/drawable-xxhdpi/art_%s.png</string>
+    <string name="pref_art_pack_cute_dogs" translatable="false">https://raw.githubusercontent.com/udacity/Sunshine-Version-2/sunshine_master/app/src/main/res/drawable-mdpi/art_%s.png</string>
+    <string name="pref_art_pack_sunshine_label">Sunshine</string>
+    <string name="pref_art_pack_cute_dogs_label">Cute Dogs</string>
+
     <string name="pref_notification_key" translatable="false">pref_noti</string>
     <string name="pref_notification_label">Weather Notification</string>
     <string name="pref_notification_true">Enabled</string>
