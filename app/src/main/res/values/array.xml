@@ -15,7 +15,7 @@
         <item>@string/pref_art_pack_cute_dogs_label</item>
     </string-array>
 
-    <string-array name="pref_art_pack_valeus">
+    <string-array name="pref_art_pack_values">
         <item>@string/pref_art_pack_sunshine</item>
         <item>@string/pref_art_pack_cute_dogs</item>
     </string-array>
