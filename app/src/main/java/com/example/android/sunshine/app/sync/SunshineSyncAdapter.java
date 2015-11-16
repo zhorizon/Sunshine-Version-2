@@ -565,13 +565,11 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
 
                     String title = context.getString(R.string.app_name);
 
-                    boolean isMetric = Utility.isMetric(context);
-
                     // Define the text of the forecast.
                     String contentText = String.format(context.getString(R.string.format_notification),
                             desc,
-                            Utility.formatTemperature(context, high, isMetric),
-                            Utility.formatTemperature(context, low, isMetric));
+                            Utility.formatTemperature(context, high),
+                            Utility.formatTemperature(context, low));
 
                     // build your notification here.
                     NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
