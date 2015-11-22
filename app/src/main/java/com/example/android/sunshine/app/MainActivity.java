@@ -74,24 +74,24 @@ public class MainActivity extends ActionBarActivity implements ForecastFragment.
 
         // If Google Play Services is not available, some features,
         // such as GCM-powered weather alerts, will not be available.
-        if (checkPlayServices()) {
-            mGcm = GoogleCloudMessaging.getInstance(this);
-            String regId = getRegistrationId(getApplicationContext());
-
-            if (PROJECT_NUMBER.equals("Your Project Number")) {
-                new AlertDialog.Builder(this)
-                        .setTitle("Needs Project Number")
-                        .setMessage("GCM will not function in Sunshine until you replace your set the Project Number to the done from the Google Developers Console.")
-                        .setPositiveButton(android.R.string.ok, null)
-                        .create().show();
-            } else if (regId.isEmpty()) {
-                registerInBackground(this);
-            }
-        } else {
-            Log.i(LOG_TAG, "No valid Google Play Services APK. Weather alerts will be disabled.");
-            // Store regID as null
-            storeRegistrationId(this, null);
-        }
+//        if (checkPlayServices()) {
+//            mGcm = GoogleCloudMessaging.getInstance(this);
+//            String regId = getRegistrationId(getApplicationContext());
+//
+//            if (PROJECT_NUMBER.equals("Your Project Number")) {
+//                new AlertDialog.Builder(this)
+//                        .setTitle("Needs Project Number")
+//                        .setMessage("GCM will not function in Sunshine until you replace your set the Project Number to the done from the Google Developers Console.")
+//                        .setPositiveButton(android.R.string.ok, null)
+//                        .create().show();
+//            } else if (regId.isEmpty()) {
+//                registerInBackground(this);
+//            }
+//        } else {
+//            Log.i(LOG_TAG, "No valid Google Play Services APK. Weather alerts will be disabled.");
+//            // Store regID as null
+//            storeRegistrationId(this, null);
+//        }
     }
 
     @Override
@@ -100,9 +100,9 @@ public class MainActivity extends ActionBarActivity implements ForecastFragment.
 
         // If Google Play Services is not available, some features, such as GCM-powered weather
         // alerts, will not be available.
-        if (!checkPlayServices()) {
-            // Store regID as null
-        }
+//        if (!checkPlayServices()) {
+//            // Store regID as null
+//        }
 
         String location = Utility.getPreferredLocation(this);
 
