@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Layout aliases for phone land settings -->
-    <item type="layout" name="fragment_detail">@layout/fragment_detail_wide</item>
+    <item type="layout" name="fragment_detail_start">@layout/fragment_detail_wide</item>
 </resources>
+
