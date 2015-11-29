@@ -11,6 +11,7 @@
     <string name="title_activity_main">Sunshine</string>
     <string name="title_activity_detail">Sunshine</string>
     <string name="title_activity_settings">Settings</string>
+    <string name="title_widget_today">Sunshine Today</string>
 
     <string name="pref_location_key" translatable="false">pref_location</string>
     <string name="pref_location_label">Location</string>
@@ -164,4 +165,5 @@
 
     <!-- for shared element transitions -->
     <string name="detail_icon_transition_name" translatable="false">TN_DetailIcon</string>
+
 </resources>
