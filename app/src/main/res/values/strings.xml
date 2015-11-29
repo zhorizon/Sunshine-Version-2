@@ -14,6 +14,9 @@
     <string name="title_widget_today">Sunshine Today</string>
     <string name="title_widget_detail">Sunshine Details</string>
 
+    <!-- Strings related to Muzei Source -->
+    <string name="muzei_description">Today\'s weather</string>
+
     <string name="pref_location_key" translatable="false">pref_location</string>
     <string name="pref_location_label">Location</string>
     <string name="pref_location_default" translatable="false">94043</string>
